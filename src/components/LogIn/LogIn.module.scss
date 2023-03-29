@@ -1,0 +1,36 @@
+.article {
+  width: calc(450rem / 16);
+  background-color: var(--color-neutral);
+  height: 100%;
+  display: grid;
+  place-content: center;
+  padding: 50px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+
+  button {
+    margin-block-start: 18px;
+  }
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.input {
+  background-color: var(--color-background);
+  border-radius: 10px;
+  resize: none;
+  padding-inline: 20px;
+  padding-block: 15px;
+  width: 100%;
+  font-weight: var(--font-weight-regular);
+  font-size: var(--text-body);
+  border: none;
+}

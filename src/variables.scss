@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap');
+
+:root {
+  --color-background: hsl(220, 47%, 96%);
+  --color-neutral: hsl(0, 0%, 100%);
+  --color-primary: hsl(241, 70%, 54%);
+  --color-primary-darker: hsl(241, 70%, 44%);
+  --color-secondary: hsl(330, 100%, 71%);
+  --color-accent: hsl(176, 96%, 34%);
+  --color-text: hsl(216, 76%, 10%);
+  --color-text-light: hsl(207, 28%, 69%);
+
+  --text-h1: calc(28.8rem / 16);
+  --text-h2: calc(25.6rem / 16);
+  --text-h3: calc(22.8rem / 16);
+  --text-h4: calc(20.3rem / 16);
+  --text-h5: calc(18rem / 16);
+  --text-h6: calc(16rem / 16);
+  --text-body: calc(14.2rem / 16);
+  --text-small: calc(12.6rem / 16);
+  --text-smallest: calc(10rem / 16);
+
+  --font-family: 'Lato', sans-serif;
+
+  --font-weight-regular: 300;
+  --font-weight-medium: 400;
+  --font-weight-bold: 700;
+}

@@ -1,0 +1,24 @@
+.button {
+  background-color: var(--color-primary);
+  border-radius: 10px;
+  border: none;
+  color: var(--color-neutral);
+  padding: 10px;
+  font-size: var(--text-h6);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+
+  &:hover,
+  &:focus {
+    background-color: var(--color-primary-darker);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    transition: background-color 350ms;
+
+    &:hover,
+    &:focus {
+      transition: background-color 100ms;
+    }
+  }
+}

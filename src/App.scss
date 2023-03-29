@@ -1,0 +1,12 @@
+.app {
+  height: 100dvh;
+  background-color: var(--color-background);
+  display: grid;
+  grid-template-columns: auto 1fr;
+  font-family: var(--font-family);
+}
+
+.main {
+  margin: 30px;
+  overflow-y: scroll;
+}

@@ -1,0 +1,45 @@
+.section {
+  margin-block-end: 30px;
+}
+
+.title {
+  font-size: var(--text-h2);
+  margin-block-end: 30px;
+}
+
+.form {
+  background-color: var(--color-neutral);
+  padding: 30px;
+  border-radius: 10px;
+
+  display: grid;
+  row-gap: 20px;
+
+  & > button {
+    justify-self: start;
+  }
+
+  &__field {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  &__label {
+    font-size: var(--text-h6);
+    font-weight: var(--font-weight-medium);
+  }
+
+  &__textarea,
+  &__input {
+    background-color: var(--color-background);
+    border-radius: 10px;
+    resize: none;
+    padding-inline: 20px;
+    padding-block: 15px;
+    width: 100%;
+    font-weight: var(--font-weight-regular);
+    font-size: var(--text-body);
+    border: none;
+  }
+}
