@@ -10,7 +10,7 @@ function Menu() {
             <NavLink to="/main_info">Главная страница</NavLink>
           </li>
           <li>
-            <NavLink>Преимущества</NavLink>
+            <NavLink to="/advantages">Преимущества</NavLink>
           </li>
           <li>
             <NavLink>Сервис</NavLink>
