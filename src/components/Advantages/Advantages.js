@@ -34,10 +34,10 @@ const Advantages = () => {
   const handleUpdateAdvantege = (e, id) => {
     e.preventDefault();
     const formdata = new FormData();
-    if (newImage) {
+    if (update_file) {
       formdata.append("image", newImage);
     }
-    if (newTxt) {
+    if (update_txt) {
       formdata.append("text", newTxt);
     }
     updateAdvantage({id, formdata})
