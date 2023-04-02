@@ -16,15 +16,16 @@ const appSelimApi = createApi({
           : [{ type: "Advantages", id: "LIST" }],
     }),
     putAdvantages: build.mutation({
-      query: (id) => ({
-        url: `advantages/${id}`,
+      query: ({id, body}) => ({
+        url: `advantages/${id}/`,
         method: "PATCH",
+        body:{body},
       }),
       invalidatesTags: [{ type: "Advantages", id: "LIST" }],
     }),
     delAdvantages: build.mutation({
         query: (id) => ({
-          url: `advantages/${id}`,
+          url: `advantages/${id}/`,
           method: "DELETE",
         }),
         invalidatesTags: [{ type: "Advantages", id: "LIST" }],
@@ -32,11 +33,11 @@ const appSelimApi = createApi({
 
     addAdvantages: build.mutation({
       query: (body) => ({
-        url: "advantages",
+        url: "advantages/",
         method: "POST",
         body,
       }),
-      invalidatesTags: [{ type: "FeedBack", id: "LIST" }],
+      invalidatesTags: [{ type: "Advantages", id: "LIST" }],
     }),
   }),
 });

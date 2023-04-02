@@ -16,28 +16,65 @@ const Advantages = () => {
   const [newImage, setNewImage] = useState(null);
   const [newTxt, setNewTxt] = useState("");
 
-  const handleDeleteAdvantages = async (id) => {
-    await (id).unwrap();
+  const [update_txt, setUpdata_txt]=useState("");
+  const [update_file, setUpdate_file]=useState(undefined);
+
+  const handleDeleteAdvantages = (e, id) => {
+    e.preventDefault();
+    deleteAdvantages(id)
+      .unwrap()
+      .then((payload) => {
+        alert("ok");
+      })
+      .catch((err) => {
+        alert(err.status);
+      });
   };
 
-  const handleUpdateAdvantege = async (id) => {
-    await updateAdvantage(id).unwrap();
+  const handleUpdateAdvantege = (e, id) => {
+    e.preventDefault();
+    const formdata = new FormData();
+    if (newImage) {
+      formdata.append("image", newImage);
+    }
+    if (newTxt) {
+      formdata.append("text", newTxt);
+    }
+    updateAdvantage({id, formdata})
+      .unwrap()
+      .then((payload) => {
+        console.log("ok");
+        console.log(formdata);
+      })
+      .catch((err) => {
+        alert(err.status);
+        console.log(formdata);
+      });
   };
 
   const handleFileChange = (e) => {
     setNewImage(e.target.files[0]);
   };
 
-
-  const handleAddData =(e) => {
+  const handleAddData = (e) => {
     e.preventDefault();
     const formdata = new FormData();
-    if(newImage){
+    if (newImage) {
       formdata.append("image", newImage);
     }
-    formdata.append("text", newTxt);
 
-      addAdvantages(formdata)
+    if (newTxt) {
+      formdata.append("text", newTxt);
+    }
+
+    addAdvantages(formdata)
+      .unwrap()
+      .then((payload) => {
+        console.log("ok");
+      })
+      .catch((err) => {
+        alert(err.status);
+      });
   };
 
   console.log(advantages);
@@ -60,6 +97,8 @@ const Advantages = () => {
                 className={styles.form__file}
                 type="file"
                 name="advantage__file"
+                value={update_file}
+                onChange={(e)=>setUpdate_file(e.target.files[0])}
                 id={`advantage_file_${item.id}`}
               />
             </p>
@@ -73,13 +112,16 @@ const Advantages = () => {
                 type="text"
                 id={`advantage__text_${item.id}`}
                 name="advantage_text"
-                defaultValue={item.text}
+                // defaultValue={item.text}
+                placeholder={item.text}
+                value={update_txt}
+                onChange={(e)=>setUpdata_txt(e.target.value)}
               />
             </p>
-            <Button onClick={() => handleUpdateAdvantege(item.id)}>
+            <Button onClick={(e) => handleUpdateAdvantege(e, item.id)}>
               Обновить
             </Button>
-            <Button onClick={() => handleDeleteAdvantages(item.id)}>
+            <Button onClick={(e) => handleDeleteAdvantages(e, item.id)}>
               Удалить
             </Button>
             <hr />
@@ -101,7 +143,7 @@ const Advantages = () => {
               id="main_info__title"
               name="title"
               // value={newImage}
-              onChange={(e) => handleFileChange(e)}
+              onChange={handleFileChange}
             />
           </p>
           <p className={styles.form__field}>
@@ -115,13 +157,13 @@ const Advantages = () => {
               value={newTxt}
             />
           </p>
-          {/* <Button type="submit" disabled={!newImage || isLoading}>
-            {" "}
+          <Button
+            type="submit"
+            onSubmit={(e) => handleAddData(e)}
+            disabled={!newImage || isLoading}
+          >
             {isLoading ? "Uploading..." : "Upload"}
-          </Button> */}
-          <button type="submit" disabled={!newImage|| isLoading} >
-            {isLoading ? "Uploading..." : "Upload"}
-          </button>
+          </Button>
         </form>
       </section>
     </>
