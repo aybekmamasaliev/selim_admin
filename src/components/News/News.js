@@ -1,27 +1,31 @@
 import { useState } from "react";
 import {
-  useAddAdvantagesMutation,
-  useDelAdvantagesMutation,
-  useGetAdvantagetQuery,
-  usePutAdvantagesMutation,
+  useGetNewsQuery,
+  usePutNewsMutation,
+  useAddNewsMutation,
+  useDelNewsMutation
+
 } from "../../store/apis/appSelim";
 import Button from "../Button/Button";
-import styles from "./Advantages.module.scss";
+import styles from "./News.module.scss";
 
-const Advantages = () => {
-  const { data: advantages = [] } = useGetAdvantagetQuery();
-  const [deleteAdvantages] = useDelAdvantagesMutation();
-  const [updateAdvantage] = usePutAdvantagesMutation();
-  const [addAdvantages, { isLoading }] = useAddAdvantagesMutation();
+const News = () => {
+  const [updateNews] = usePutNewsMutation();
+  const [addNews, {isLoading}]=useAddNewsMutation();
+  const {data:news={}}=useGetNewsQuery(1000)
+  const [deleteNews]=useDelNewsMutation()
+
   const [newImage, setNewImage] = useState(null);
   const [newTxt, setNewTxt] = useState("");
+  const [newTitle, setNewTitle] = useState("");
 
-  const [update_txt, setUpdata_txt]=useState("");
-  const [update_file, setUpdate_file]=useState("");
+  const [update_txt, setUpdata_txt] = useState("");
+  const [update_file, setUpdate_file] = useState("");
+  const [update_title, setUpdate_title] = useState("");
 
   const handleDeleteAdvantages = (e, id) => {
     e.preventDefault();
-    deleteAdvantages(id)
+    deleteNews(id)
       .unwrap()
       .then((payload) => {
         alert("ok");
@@ -37,29 +41,33 @@ const Advantages = () => {
     if (update_txt) {
       formdata.append("text", update_txt);
     }
+    if (update_title) {
+        formdata.append("title", update_title);
+      }
     if (update_file) {
       formdata.append("image", update_file);
     }
-    const variable = {id, formdata}
-    updateAdvantage(variable)
+    const variable = { id, formdata };
+    updateNews(variable)
       .unwrap()
       .then((payload) => {
-        setUpdata_txt("")
-        setUpdate_file(null)
+        setUpdata_txt("");
+        setUpdate_file(null);
+        setUpdate_title("")
       })
       .catch((err) => {
         alert(err.status);
       });
   };
 
-  const handleChangeUpdateFile=(e)=>{
+  const handleChangeUpdateFile = (e) => {
     e.preventDefault();
-    setUpdate_file(e.target.files[0])
-  }
+    setUpdate_file(e.target.files[0]);
+  };
 
   const handleFileChange = (e) => {
     setNewImage(e.target.files[0]);
-      console.log(e.target.files[0].name)
+    console.log(e.target.files[0].name);
   };
 
   const handleAddData = (e) => {
@@ -68,40 +76,44 @@ const Advantages = () => {
     if (newImage) {
       formdata.append("image", newImage);
     }
-
     if (newTxt) {
       formdata.append("text", newTxt);
     }
+    if (newTitle) {
+        formdata.append("title", newTitle);
+      }
 
-    addAdvantages(formdata)
+      addNews(formdata)
       .unwrap()
       .then((payload) => {
         console.log("ok");
-        setNewImage(null)
-        setNewTxt("")
+        setNewImage(null);
+        setNewTxt("");
       })
       .catch((err) => {
         alert(err.status);
       });
   };
 
-  console.log(advantages);
+  console.log(news)
 
   return (
     <>
       <section className={styles.section}>
         <h1 className={styles.title}>Преимущества</h1>
 
-        {advantages.map((item) => (
+        {news.results?.map((item) => (
           <form className={styles.form} key={item.id}>
             <p className={styles.form__field}>
               <label
                 htmlFor={`advantage_file_${item.id}`}
                 className={styles.form__label}
               >
-                {
-                  update_file? <span>{update_file.name}</span>:<span>Файл</span>
-                }
+                {update_file ? (
+                  <span>{update_file.name}</span>
+                ) : (
+                  <span>Файл</span>
+                )}
               </label>
               <input
                 className={styles.form__file}
@@ -115,6 +127,21 @@ const Advantages = () => {
             <div>
               <img src={item.image} alt="" />
             </div>
+
+            <p className={styles.form__field}>
+              <label htmlFor={`advantage__title_${item.id}`}>Заголовок</label>
+              <input
+                className={styles.form__textarea}
+                type="text"
+                id={`advantage__title_${item.id}`}
+                name="advantage_title"
+                defaultValue={item.title}
+                placeholder={item.title}
+                // value={update_txt}
+                onChange={(e) => setUpdate_title(e.target.value)}
+              />
+            </p>
+
             <p className={styles.form__field}>
               <label htmlFor={`advantage__text_${item.id}`}>Текст</label>
               <input
@@ -125,9 +152,10 @@ const Advantages = () => {
                 defaultValue={item.text}
                 placeholder={item.text}
                 // value={update_txt}
-                onChange={(e)=>setUpdata_txt(e.target.value)}
+                onChange={(e) => setUpdata_txt(e.target.value)}
               />
             </p>
+
             <Button onClick={(e) => handleUpdateAdvantege(e, item.id)}>
               Обновить
             </Button>
@@ -145,9 +173,11 @@ const Advantages = () => {
         <form className={styles.form} onSubmit={(e) => handleAddData(e)}>
           <p className={styles.form__field}>
             <label htmlFor="main_info__title" className={styles.form__label}>
-              {
-                newImage? <span>Вы выбрали файл : {newImage.name}</span>:<span>Файл</span>
-              }
+              {newImage ? (
+                <span>Вы выбрали файл : {newImage.name}</span>
+              ) : (
+                <span>Файл</span>
+              )}
             </label>
             <input
               className={styles.form__file}
@@ -156,6 +186,17 @@ const Advantages = () => {
               name="title"
               // value={newImage}
               onChange={handleFileChange}
+            />
+          </p>
+          <p className={styles.form__field}>
+            <label htmlFor="main_info__title">Заголовок</label>
+            <input
+              className={styles.form__textarea}
+              type="text"
+              id="main_info__title"
+              name="subtitle"
+              onChange={(e) => setNewTitle(e.target.value)}
+              value={newTitle}
             />
           </p>
           <p className={styles.form__field}>
@@ -169,6 +210,7 @@ const Advantages = () => {
               value={newTxt}
             />
           </p>
+
           <Button
             type="submit"
             onSubmit={(e) => handleAddData(e)}
@@ -182,4 +224,4 @@ const Advantages = () => {
   );
 };
 
-export default Advantages;
+export default News;

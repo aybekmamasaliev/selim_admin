@@ -28,6 +28,10 @@
     &__label {
       font-size: var(--text-h6);
       font-weight: var(--font-weight-medium);
+      border: 1px solid #ccc;
+      display: inline-block;
+      padding: 6px 12px;
+      cursor: pointer;
     }
 
     &__file{
@@ -54,5 +58,9 @@
       font-weight: var(--font-weight-regular);
       font-size: var(--text-body);
       border: none;
+    }
+
+    input[type="file"]{
+      display: none;
     }
   }

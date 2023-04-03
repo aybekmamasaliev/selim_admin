@@ -6,7 +6,10 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import MainInfo from './components/MainInfo/MainInfo';
 import { useSelector } from 'react-redux';
 import LogIn from './components/LogIn/LogIn';
+
 import Advantages from './components/Advantages/Advantages';
+import Services from './components/Services/Services';
+import News from './components/News/News';
 
 function App() {
   return (
@@ -17,6 +20,8 @@ function App() {
           <Routes>
             <Route path="/" element={<MainInfo />} />
             <Route path="/advantages" element={<Advantages/>} />
+            <Route path="/services" element={<Services/>} />
+            <Route path="/news" element={<News/>} />
             <Route path="/main_info" element={<MainInfo />} />
             <Route path="/login" element={<LogIn />} />
           </Routes>

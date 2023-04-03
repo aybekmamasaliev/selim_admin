@@ -1,27 +1,28 @@
 import { useState } from "react";
 import {
-  useAddAdvantagesMutation,
-  useDelAdvantagesMutation,
-  useGetAdvantagetQuery,
-  usePutAdvantagesMutation,
+  useAddServicesMutation,
+  useGetServicesQuery,
+  usePutServicesMutation,
+  useDelServicesMutation
 } from "../../store/apis/appSelim";
 import Button from "../Button/Button";
-import styles from "./Advantages.module.scss";
+import styles from "./Services.module.scss";
 
-const Advantages = () => {
-  const { data: advantages = [] } = useGetAdvantagetQuery();
-  const [deleteAdvantages] = useDelAdvantagesMutation();
-  const [updateAdvantage] = usePutAdvantagesMutation();
-  const [addAdvantages, { isLoading }] = useAddAdvantagesMutation();
+const Services = () => {
+  const [addServices, { isLoading }] = useAddServicesMutation();
+  const [deleteServices] = useDelServicesMutation();
+  const [updateServices] = usePutServicesMutation();
+  const { data: services = [] } = useGetServicesQuery();
+
   const [newImage, setNewImage] = useState(null);
   const [newTxt, setNewTxt] = useState("");
 
-  const [update_txt, setUpdata_txt]=useState("");
-  const [update_file, setUpdate_file]=useState("");
+  const [update_txt, setUpdata_txt] = useState("");
+  const [update_file, setUpdate_file] = useState("");
 
   const handleDeleteAdvantages = (e, id) => {
     e.preventDefault();
-    deleteAdvantages(id)
+    deleteServices(id)
       .unwrap()
       .then((payload) => {
         alert("ok");
@@ -40,26 +41,26 @@ const Advantages = () => {
     if (update_file) {
       formdata.append("image", update_file);
     }
-    const variable = {id, formdata}
-    updateAdvantage(variable)
+    const variable = { id, formdata };
+    updateServices(variable)
       .unwrap()
       .then((payload) => {
-        setUpdata_txt("")
-        setUpdate_file(null)
+        setUpdata_txt("");
+        setUpdate_file(null);
       })
       .catch((err) => {
         alert(err.status);
       });
   };
 
-  const handleChangeUpdateFile=(e)=>{
+  const handleChangeUpdateFile = (e) => {
     e.preventDefault();
-    setUpdate_file(e.target.files[0])
-  }
+    setUpdate_file(e.target.files[0]);
+  };
 
   const handleFileChange = (e) => {
     setNewImage(e.target.files[0]);
-      console.log(e.target.files[0].name)
+    console.log(e.target.files[0].name);
   };
 
   const handleAddData = (e) => {
@@ -73,35 +74,35 @@ const Advantages = () => {
       formdata.append("text", newTxt);
     }
 
-    addAdvantages(formdata)
+    addServices(formdata)
       .unwrap()
       .then((payload) => {
         console.log("ok");
-        setNewImage(null)
-        setNewTxt("")
+        setNewImage(null);
+        setNewTxt("");
       })
       .catch((err) => {
         alert(err.status);
       });
   };
 
-  console.log(advantages);
-
   return (
     <>
       <section className={styles.section}>
-        <h1 className={styles.title}>Преимущества</h1>
+        <h1 className={styles.title}>Сервисы</h1>
 
-        {advantages.map((item) => (
+        {services.map((item) => (
           <form className={styles.form} key={item.id}>
             <p className={styles.form__field}>
               <label
                 htmlFor={`advantage_file_${item.id}`}
                 className={styles.form__label}
               >
-                {
-                  update_file? <span>{update_file.name}</span>:<span>Файл</span>
-                }
+                {update_file ? (
+                  <span>{update_file.name}</span>
+                ) : (
+                  <span>Файл</span>
+                )}
               </label>
               <input
                 className={styles.form__file}
@@ -125,7 +126,7 @@ const Advantages = () => {
                 defaultValue={item.text}
                 placeholder={item.text}
                 // value={update_txt}
-                onChange={(e)=>setUpdata_txt(e.target.value)}
+                onChange={(e) => setUpdata_txt(e.target.value)}
               />
             </p>
             <Button onClick={(e) => handleUpdateAdvantege(e, item.id)}>
@@ -140,14 +141,16 @@ const Advantages = () => {
       </section>
 
       <section className={styles.section}>
-        <h1 className={styles.title}>Добавить преимущества</h1>
+        <h1 className={styles.title}>Добавить Сервисы</h1>
 
         <form className={styles.form} onSubmit={(e) => handleAddData(e)}>
           <p className={styles.form__field}>
             <label htmlFor="main_info__title" className={styles.form__label}>
-              {
-                newImage? <span>Вы выбрали файл : {newImage.name}</span>:<span>Файл</span>
-              }
+              {newImage ? (
+                <span>Вы выбрали файл : {newImage.name}</span>
+              ) : (
+                <span>Файл</span>
+              )}
             </label>
             <input
               className={styles.form__file}
@@ -182,4 +185,4 @@ const Advantages = () => {
   );
 };
 
-export default Advantages;
+export default Services;
