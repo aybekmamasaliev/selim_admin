@@ -49,6 +49,16 @@ const appSelimApi = createApi({
             ]
           : [{ type: "Categories", id: "LIST" }],
     }),
+    getFeedBack: build.query({
+      query: () => "feedback",
+      providesTags: (result) =>
+        result
+          ? [
+              ...result.map(({ id }) => ({ type: "FeedBack", id })),
+              { type: "FeedBack", id: "LIST" },
+            ]
+          : [{ type: "FeedBack", id: "LIST" }],
+    }),
 
     putAdvantages: build.mutation({
       query: ({ id, formdata }) => ({
@@ -127,6 +137,14 @@ const appSelimApi = createApi({
       invalidatesTags: [{ type: "News", id: "LIST" }],
     }),
 
+    delFeedBack: build.mutation({
+      query: (id) => ({
+        url: `feedback/${id}/`,
+        method: "DELETE",
+      }),
+      invalidatesTags: [{ type: "FeedBack", id: "LIST" }],
+    }),
+
     addAdvantages: build.mutation({
       query: (body) => ({
         url: "advantages/",
@@ -193,4 +211,6 @@ export const {
   useDelSubNewsFileMutation,
   usePutSubMenuImgMutation,
   useGetCategoriesQuery,
+  useGetFeedBackQuery,
+  useDelFeedBackMutation,
 } = appSelimApi;

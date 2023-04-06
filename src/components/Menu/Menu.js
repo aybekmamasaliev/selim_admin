@@ -25,6 +25,9 @@ function Menu() {
             <NavLink to="/reviews">Отзывы</NavLink>
           </li>
           <li>
+            <NavLink to="/feedback">Вопросы</NavLink>
+          </li>
+          <li>
             <NavLink>Галерея</NavLink>
           </li>
           <li>
