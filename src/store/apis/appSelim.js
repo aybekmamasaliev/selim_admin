@@ -39,6 +39,16 @@ const appSelimApi = createApi({
       query: (count, reload) => `news?limit=${count}&offset=${reload}`,
       
     }),
+    getCategories: build.query({
+      query: () => "categories",
+      providesTags: (result) =>
+        result
+          ? [
+              ...result.map(({ id }) => ({ type: "Categories", id })),
+              { type: "Categories", id: "LIST" },
+            ]
+          : [{ type: "Categories", id: "LIST" }],
+    }),
 
     putAdvantages: build.mutation({
       query: ({ id, formdata }) => ({
@@ -182,4 +192,5 @@ export const {
   useAddSubNewsImgMutation,
   useDelSubNewsFileMutation,
   usePutSubMenuImgMutation,
+  useGetCategoriesQuery,
 } = appSelimApi;
