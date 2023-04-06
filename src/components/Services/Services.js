@@ -107,13 +107,12 @@ const Services = () => {
               <input
                 className={styles.form__file}
                 type="file"
-                name="advantage__file"
-                // value={update_file}
+                name="service__file"
                 onChange={handleChangeUpdateFile}
                 id={`advantage_file_${item.id}`}
               />
             </p>
-            <div>
+            <div className={styles.img}>
               <img src={item.image} alt="" />
             </div>
             <p className={styles.form__field}>
@@ -122,10 +121,9 @@ const Services = () => {
                 className={styles.form__textarea}
                 type="text"
                 id={`advantage__text_${item.id}`}
-                name="advantage_text"
+                name="service_text"
                 defaultValue={item.text}
                 placeholder={item.text}
-                // value={update_txt}
                 onChange={(e) => setUpdata_txt(e.target.value)}
               />
             </p>
@@ -156,8 +154,7 @@ const Services = () => {
               className={styles.form__file}
               type="file"
               id="main_info__title"
-              name="title"
-              // value={newImage}
+              name="file"
               onChange={handleFileChange}
             />
           </p>
@@ -167,7 +164,7 @@ const Services = () => {
               className={styles.form__textarea}
               type="text"
               id="main_info__subtitle"
-              name="subtitle"
+              name="text"
               onChange={(e) => setNewTxt(e.target.value)}
               value={newTxt}
             />

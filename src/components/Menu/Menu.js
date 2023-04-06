@@ -22,7 +22,7 @@ function Menu() {
             <NavLink>Категории</NavLink>
           </li>
           <li>
-            <NavLink>Отзывы</NavLink>
+            <NavLink to="/reviews">Отзывы</NavLink>
           </li>
           <li>
             <NavLink>Галерея</NavLink>

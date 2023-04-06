@@ -10,6 +10,7 @@ import LogIn from './components/LogIn/LogIn';
 import Advantages from './components/Advantages/Advantages';
 import Services from './components/Services/Services';
 import News from './components/News/News';
+import Reviews from './components/Reviews/Reviews';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
             <Route path="/advantages" element={<Advantages/>} />
             <Route path="/services" element={<Services/>} />
             <Route path="/news" element={<News/>} />
+            <Route path="/reviews" element={<Reviews/>} />
             <Route path="/main_info" element={<MainInfo />} />
             <Route path="/login" element={<LogIn />} />
           </Routes>

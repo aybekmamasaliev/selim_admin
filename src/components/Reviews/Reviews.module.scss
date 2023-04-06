@@ -14,6 +14,7 @@
       margin-bottom: 20px;
       display: grid;
       row-gap: 20px;
+      
     
       & > button {
         justify-self: start;
@@ -31,15 +32,6 @@
         border: 1px solid #ccc;
         display: inline-block;
         padding: 6px 12px;
-        cursor: pointer;
-      }
-      &__label_add {
-        font-size: var(--text-h6);
-        font-weight: var(--font-weight-medium);
-        border: 1px solid #ccc;
-        display: inline-block;
-        padding: 6px 12px;
-        height: 40px;
         cursor: pointer;
       }
   
@@ -72,32 +64,11 @@
       input[type="file"]{
         display: none;
       }
+      border: 1px solid black;
     }
 
     .img{
-      img{
-          max-width: 250px;
-      }
-  }
-  .sub_img{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    img{
-      max-width: 250px;
+        img{
+            max-width: 250px;
+        }
     }
-    .sub_file_add{
-      display: flex;
-      flex-direction: column;
-      justify-content: space-around;
-    }
-
-    
-  }
-
-  .div_for_subnews{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    margin-left: 10px;
-  }

@@ -25,6 +25,16 @@ const appSelimApi = createApi({
             ]
           : [{ type: "Services", id: "LIST" }],
     }),
+    getReviews: build.query({
+      query: () => "review",
+      providesTags: (result) =>
+        result
+          ? [
+              ...result.map(({ id }) => ({ type: "Reviews", id })),
+              { type: "Reviews", id: "LIST" },
+            ]
+          : [{ type: "Reviews", id: "LIST" }],
+    }),
     getNews: build.query({
       query: (count, reload) => `news?limit=${count}&offset=${reload}`,
       
@@ -54,6 +64,22 @@ const appSelimApi = createApi({
       }),
       invalidatesTags: [{ type: "News", id: "LIST" }],
     }),
+    putReviews: build.mutation({
+      query: ({ id, formdata }) => ({
+        url: `review/${id}/`,
+        method: "PATCH",
+        body: formdata,
+      }),
+      invalidatesTags: [{ type: "Reviews", id: "LIST" }],
+    }),
+    putSubMenuImg: build.mutation({
+      query: ({ id, formdata }) => ({
+        url: `news_images/${id}/`,
+        method: "PATCH",
+        body: formdata,
+      }),
+      invalidatesTags: [{ type: "Reviews", id: "LIST" }],
+    }),
     delAdvantages: build.mutation({
       query: (id) => ({
         url: `advantages/${id}/`,
@@ -72,6 +98,20 @@ const appSelimApi = createApi({
     delNews: build.mutation({
       query: (id) => ({
         url: `news/${id}/`,
+        method: "DELETE",
+      }),
+      invalidatesTags: [{ type: "News", id: "LIST" }],
+    }),
+    delReviews: build.mutation({
+      query: (id) => ({
+        url: `review/${id}/`,
+        method: "DELETE",
+      }),
+      invalidatesTags: [{ type: "Reviews", id: "LIST" }],
+    }),
+    delSubNewsFile: build.mutation({
+      query: (id) => ({
+        url: `news_images/${id}/`,
         method: "DELETE",
       }),
       invalidatesTags: [{ type: "News", id: "LIST" }],
@@ -101,6 +141,22 @@ const appSelimApi = createApi({
       }),
       invalidatesTags: [{ type: "News", id: "LIST" }],
     }),
+    addReviews: build.mutation({
+      query: (body) => ({
+        url: "review/",
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: [{ type: "Reviews", id: "LIST" }],
+    }),
+    addSubNewsImg: build.mutation({
+      query: (body) => ({
+        url: "news_images/",
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: [{ type: "News", id: "LIST" }],
+    }),
   }),
 });
 
@@ -119,4 +175,11 @@ export const {
   usePutNewsMutation,
   useAddNewsMutation,
   useDelNewsMutation,
+  useGetReviewsQuery,
+  usePutReviewsMutation,
+  useDelReviewsMutation,
+  useAddReviewsMutation,
+  useAddSubNewsImgMutation,
+  useDelSubNewsFileMutation,
+  usePutSubMenuImgMutation,
 } = appSelimApi;

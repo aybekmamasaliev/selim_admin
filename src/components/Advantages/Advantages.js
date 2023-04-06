@@ -85,8 +85,6 @@ const Advantages = () => {
       });
   };
 
-  console.log(advantages);
-
   return (
     <>
       <section className={styles.section}>
@@ -112,7 +110,7 @@ const Advantages = () => {
                 id={`advantage_file_${item.id}`}
               />
             </p>
-            <div>
+            <div className={styles.img}>
               <img src={item.image} alt="" />
             </div>
             <p className={styles.form__field}>
