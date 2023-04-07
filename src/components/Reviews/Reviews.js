@@ -201,7 +201,7 @@ const Reviews = () => {
 
             <p className={styles.form__field}>
               <label htmlFor={`review__text_${item.id}`}>Отзыв</label>
-              <input
+              <textarea
                 className={styles.form__textarea}
                 type="text"
                 id={`review__text_${item.id}`}
@@ -293,7 +293,7 @@ const Reviews = () => {
           </p>
           <p className={styles.form__field}>
             <label htmlFor="review_text">Отзыв</label>
-            <input
+            <textarea
               className={styles.form__textarea}
               type="text"
               id="review_text"

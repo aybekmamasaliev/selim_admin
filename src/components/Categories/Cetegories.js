@@ -7,18 +7,24 @@ import {
   useAddSubNewsImgMutation,
   useDelSubNewsFileMutation,
   usePutSubMenuImgMutation,
+  useGetCategoriesQuery,
+  useAddCategoryMutation,
+  useDelCategoryMutation,
+  usePutCategoriesMutation,
+  useGetCategoryAdvantagesQuery,
 } from "../../store/apis/appSelim";
 import Button from "../Button/Button";
-import styles from "./News.module.scss";
+import styles from "./Categories.module.scss";
 
-const News = () => {
+const Categories = () => {
   const [updateNews] = usePutNewsMutation();
   const [addNews, { isLoading }] = useAddNewsMutation();
-  const { data: news = {} } = useGetNewsQuery(1000);
+  const { data: categories = [] } = useGetCategoriesQuery();
+  const { data: category_dvantages = [] } = useGetCategoryAdvantagesQuery();
   const [deleteNews] = useDelNewsMutation();
   const [addSunNewsImg] = useAddSubNewsImgMutation();
   const [delSubNewsFile] = useDelSubNewsFileMutation();
-  const [updateSubImg]=usePutSubMenuImgMutation();
+  const [updateSubImg] = usePutSubMenuImgMutation();
 
   const [newImage, setNewImage] = useState(null);
   const [newTxt, setNewTxt] = useState("");
@@ -29,6 +35,8 @@ const News = () => {
   const [update_txt, setUpdata_txt] = useState("");
   const [update_file, setUpdate_file] = useState("");
   const [update_title, setUpdate_title] = useState("");
+  const [update_desc, setUpdate_desc] = useState("");
+  const [update_parent, setUpdate_parent] = useState("");
   const [update_sub_file, setUpdate_sub_file] = useState("");
 
   const handleDeleteNews = (e, id) => {
@@ -62,7 +70,7 @@ const News = () => {
         setUpdata_txt("");
         setUpdate_file(null);
         setUpdate_title("");
-        alert("ok")
+        alert("ok");
       })
       .catch((err) => {
         alert(err.status);
@@ -171,7 +179,7 @@ const News = () => {
       });
   };
 
-  console.log(news);
+  console.log(categories);
   console.log(update_sub_file);
 
   return (
@@ -179,7 +187,7 @@ const News = () => {
       <section className={styles.section}>
         <h1 className={styles.title}>Новости</h1>
 
-        {news.results?.map((item) => (
+        {categories.map((item) => (
           <form className={styles.form} key={item.id}>
             <p className={styles.form__field}>
               <label
@@ -203,26 +211,70 @@ const News = () => {
             <div className={styles.img}>
               <img src={item.image} alt="" />
             </div>
+            <p className={styles.form__field}>
+              <label htmlFor={`category_title_${item.id}`}>Заголовок</label>
+              <input
+                className={styles.form__textarea}
+                type="text"
+                id={`category_title_${item.id}`}
+                name="title"
+                defaultValue={item.title}
+                placeholder={item.title}
+                onChange={(e) => setUpdate_title(e.target.value)}
+              />
+            </p>
+            <p className={styles.form__field}>
+              <label htmlFor={`category_desc_${item.id}`}>Описание</label>
+              <textarea
+                className={styles.form__textarea}
+                type="text"
+                id={`category_desc_${item.id}`}
+                name="description"
+                onChange={(e) => setUpdate_desc(e.target.value)}
+              >
+                {item.description}
+              </textarea>
+            </p>
+            <p className={styles.form__field}>
+              <label htmlFor={`parent_category_${item.id}`}>Категория</label>
+              <textarea
+                className={styles.form__textarea}
+                type="text"
+                id={`parent_category_${item.id}`}
+                name="parent_category"
+                onChange={(e) => setUpdate_parent(e.target.value)}
+              >
+                {item.parent_category}
+              </textarea>
+            </p>
 
             <div className={styles.sub_img}>
-              {item.news_images?.map((image) => (
+              {category_dvantages.map((image) => (
                 <div className={styles.div_for_subnews} key={image.id}>
                   <label
-                    htmlFor={`sub_img_file_${image.id}`}
+                    htmlFor={`description${image.id}`}
                     className={styles.form__label}
                   >
-                    {update_sub_file ? (
-                      <span>{update_sub_file.name}</span>
-                    ) : (
-                      <span>Обновить Файл</span>
-                    )}
+                   description
                   </label>
                   <input
-                    type="file"
-                    id={`sub_img_file_${image.id}`}
+                    type="text"
+                    id={`description${image.id}`}
+                    defaultValue={image.text}
                     onChange={handleChangeUpdateSubFile}
                   />
-                  <img src={image.image} alt="" />
+                  <label
+                    htmlFor={`sub_title_${image.id}`}
+                    className={styles.form__label}
+                  >
+                   description
+                  </label>
+                  <textarea
+                    type="text"
+                    id={`sub_title_${image.id}`}
+                    defaultValue={image.text}
+                    onChange={handleChangeUpdateSubFile}
+                  />
                   <Button onClick={(e) => deleteSubFile(e, image.id)}>
                     Удалить
                   </Button>
@@ -246,35 +298,6 @@ const News = () => {
                 </Button>
               </div>
             </div>
-
-            <p className={styles.form__field}>
-              <label htmlFor={`advantage__title_${item.id}`}>Заголовок</label>
-              <input
-                className={styles.form__textarea}
-                type="text"
-                id={`advantage__title_${item.id}`}
-                name="title"
-                defaultValue={item.title}
-                placeholder={item.title}
-                // value={update_txt}
-                onChange={(e) => setUpdate_title(e.target.value)}
-              />
-            </p>
-
-            <p className={styles.form__field}>
-              <label htmlFor={`advantage__text_${item.id}`}>Текст</label>
-              <textarea
-                className={styles.form__textarea}
-                type="text"
-                id={`advantage__text_${item.id}`}
-                name="text"
-                // defaultValue={item.text}
-                // placeholder={item.text}
-                onChange={(e) => setUpdata_txt(e.target.value)}
-              >
-                {item.text}
-              </textarea>
-            </p>
 
             <Button onClick={(e) => handleUpdateNews(e, item.id)}>
               Обновить
@@ -344,4 +367,4 @@ const News = () => {
   );
 };
 
-export default News;
+export default Categories;

@@ -39,6 +39,16 @@ const appSelimApi = createApi({
       query: (count, reload) => `news?limit=${count}&offset=${reload}`,
       
     }),
+    getFeedBack: build.query({
+      query: () => "feedback",
+      providesTags: (result) =>
+        result
+          ? [
+              ...result.map(({ id }) => ({ type: "FeedBack", id })),
+              { type: "FeedBack", id: "LIST" },
+            ]
+          : [{ type: "FeedBack", id: "LIST" }],
+    }),
     getCategories: build.query({
       query: () => "categories",
       providesTags: (result) =>
@@ -49,15 +59,15 @@ const appSelimApi = createApi({
             ]
           : [{ type: "Categories", id: "LIST" }],
     }),
-    getFeedBack: build.query({
-      query: () => "feedback",
+    getCategoryAdvantages: build.query({
+      query: () => "category-advantages",
       providesTags: (result) =>
         result
           ? [
-              ...result.map(({ id }) => ({ type: "FeedBack", id })),
-              { type: "FeedBack", id: "LIST" },
+              ...result.map(({ id }) => ({ type: "CategoryAdvantages", id })),
+              { type: "CategoryAdvantages", id: "LIST" },
             ]
-          : [{ type: "FeedBack", id: "LIST" }],
+          : [{ type: "CategoryAdvantages", id: "LIST" }],
     }),
 
     putAdvantages: build.mutation({
@@ -99,6 +109,14 @@ const appSelimApi = createApi({
         body: formdata,
       }),
       invalidatesTags: [{ type: "Reviews", id: "LIST" }],
+    }),
+    putCategories: build.mutation({
+      query: ({ id, formdata }) => ({
+        url: `categories/${id}/`,
+        method: "PATCH",
+        body: formdata,
+      }),
+      invalidatesTags: [{ type: "Categories", id: "LIST" }],
     }),
     delAdvantages: build.mutation({
       query: (id) => ({
@@ -144,6 +162,13 @@ const appSelimApi = createApi({
       }),
       invalidatesTags: [{ type: "FeedBack", id: "LIST" }],
     }),
+    delCategory: build.mutation({
+      query: (id) => ({
+        url: `categories/${id}/`,
+        method: "DELETE",
+      }),
+      invalidatesTags: [{ type: "Categories", id: "LIST" }],
+    }),
 
     addAdvantages: build.mutation({
       query: (body) => ({
@@ -185,6 +210,14 @@ const appSelimApi = createApi({
       }),
       invalidatesTags: [{ type: "News", id: "LIST" }],
     }),
+    addCategory: build.mutation({
+      query: (body) => ({
+        url: "categories/",
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: [{ type: "Categories", id: "LIST" }],
+    }),
   }),
 });
 
@@ -210,7 +243,11 @@ export const {
   useAddSubNewsImgMutation,
   useDelSubNewsFileMutation,
   usePutSubMenuImgMutation,
-  useGetCategoriesQuery,
   useGetFeedBackQuery,
   useDelFeedBackMutation,
+  useGetCategoriesQuery,
+  useAddCategoryMutation,
+  usePutCategoriesMutation,
+  useDelCategoryMutation,
+  useGetCategoryAdvantagesQuery,
 } = appSelimApi;

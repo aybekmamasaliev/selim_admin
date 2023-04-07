@@ -12,6 +12,7 @@ import Services from './components/Services/Services';
 import News from './components/News/News';
 import Reviews from './components/Reviews/Reviews';
 import Feedback from './components/FeedBack/FeedBack';
+import Categories from './components/Categories/Cetegories';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
             <Route path="/news" element={<News/>} />
             <Route path="/reviews" element={<Reviews/>} />
             <Route path="/feedback" element={<Feedback/>} />
+            <Route path="/categories" element={<Categories/>} />
             <Route path="/main_info" element={<MainInfo />} />
             <Route path="/login" element={<LogIn />} />
           </Routes>
