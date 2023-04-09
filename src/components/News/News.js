@@ -31,7 +31,7 @@ const News = () => {
   const [update_title, setUpdate_title] = useState("");
   const [update_sub_file, setUpdate_sub_file] = useState("");
 
-  const handleDeleteAdvantages = (e, id) => {
+  const handleDeleteNews = (e, id) => {
     e.preventDefault();
     deleteNews(id)
       .unwrap()
@@ -43,7 +43,7 @@ const News = () => {
       });
   };
 
-  const handleUpdateAdvantege = (e, id) => {
+  const handleUpdateNews = (e, id) => {
     e.preventDefault();
     const formdata = new FormData();
     if (update_txt) {
@@ -62,6 +62,7 @@ const News = () => {
         setUpdata_txt("");
         setUpdate_file(null);
         setUpdate_title("");
+        alert("ok")
       })
       .catch((err) => {
         alert(err.status);
@@ -164,6 +165,7 @@ const News = () => {
         console.log("ok");
         setNewImage(null);
         setNewTxt("");
+        setNewTitle("")
       })
       .catch((err) => {
         alert(err.status);
@@ -262,22 +264,20 @@ const News = () => {
 
             <p className={styles.form__field}>
               <label htmlFor={`advantage__text_${item.id}`}>Текст</label>
-              <input
+              <textarea
                 className={styles.form__textarea}
                 type="text"
                 id={`advantage__text_${item.id}`}
                 name="text"
                 defaultValue={item.text}
-                placeholder={item.text}
-                // value={update_txt}
                 onChange={(e) => setUpdata_txt(e.target.value)}
               />
             </p>
 
-            <Button onClick={(e) => handleUpdateAdvantege(e, item.id)}>
+            <Button onClick={(e) => handleUpdateNews(e, item.id)}>
               Обновить
             </Button>
-            <Button onClick={(e) => handleDeleteAdvantages(e, item.id)}>
+            <Button onClick={(e) => handleDeleteNews(e, item.id)}>
               Удалить
             </Button>
             <hr />
