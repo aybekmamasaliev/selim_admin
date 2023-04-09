@@ -118,6 +118,14 @@ const appSelimApi = createApi({
       }),
       invalidatesTags: [{ type: "Categories", id: "LIST" }],
     }),
+    putCategoryAdvantages: build.mutation({
+      query: ({formdata ,id}) => ({
+        url: `category-advantages/${id}/`,
+        method: "PATCH",
+        body: formdata,
+      }),
+      invalidatesTags: [{ type: "CategoryAdvantages", id: "LIST" }],
+    }),
     delAdvantages: build.mutation({
       query: (id) => ({
         url: `advantages/${id}/`,
@@ -169,6 +177,13 @@ const appSelimApi = createApi({
       }),
       invalidatesTags: [{ type: "Categories", id: "LIST" }],
     }),
+    delCategoryAdvantages: build.mutation({
+      query: (id) => ({
+        url: `category-advantages/${id}/`,
+        method: "DELETE",
+      }),
+      invalidatesTags: [{ type: "CategoryAdvantages", id: "LIST" }],
+    }),
 
     addAdvantages: build.mutation({
       query: (body) => ({
@@ -218,6 +233,14 @@ const appSelimApi = createApi({
       }),
       invalidatesTags: [{ type: "Categories", id: "LIST" }],
     }),
+    addCategoryAdvantages: build.mutation({
+      query: (body) => ({
+        url: `category-advantages/`,
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: [{ type: "CategoryAdvantages", id: "LIST" }],
+    }),
   }),
 });
 
@@ -250,4 +273,8 @@ export const {
   usePutCategoriesMutation,
   useDelCategoryMutation,
   useGetCategoryAdvantagesQuery,
+  useAddCategoryAdvantagesMutation,
+  useDelCategoryAdvantagesMutation,
+  usePutCategoryAdvantagesMutation,
+
 } = appSelimApi;

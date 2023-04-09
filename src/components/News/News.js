@@ -165,6 +165,7 @@ const News = () => {
         console.log("ok");
         setNewImage(null);
         setNewTxt("");
+        setNewTitle("")
       })
       .catch((err) => {
         alert(err.status);
@@ -268,12 +269,9 @@ const News = () => {
                 type="text"
                 id={`advantage__text_${item.id}`}
                 name="text"
-                // defaultValue={item.text}
-                // placeholder={item.text}
+                defaultValue={item.text}
                 onChange={(e) => setUpdata_txt(e.target.value)}
-              >
-                {item.text}
-              </textarea>
+              />
             </p>
 
             <Button onClick={(e) => handleUpdateNews(e, item.id)}>

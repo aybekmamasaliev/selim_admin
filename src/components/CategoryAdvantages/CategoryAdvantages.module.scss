@@ -1,0 +1,49 @@
+
+.form{
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  padding: 5px;
+  outline: 2px solid black;
+  border-radius: 10px;
+}
+
+.cover_form{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  font-size: 20px;
+
+  label{
+    cursor: pointer;
+  }
+  
+}
+
+.input{
+  min-width: 400px;
+  max-width: 400px;
+  padding: 5px;
+  border-radius: 10px;
+  background-color: var(--color-background);
+}
+
+.flex_c{
+  display: flex;
+  flex-direction: column;
+  margin-block: 10px;
+}
+
+.texarea{
+  padding: 5px;
+  min-height: 100px;
+  max-height: 100px;
+  max-width: 400px;
+  min-width: 400px;
+  border-radius: 10px;
+  background-color: var(--color-background);
+}
+
+.texarea::-webkit-scrollbar {
+  display: none;
+}

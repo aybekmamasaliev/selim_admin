@@ -1,158 +1,65 @@
 import { useState } from "react";
 import {
-  useGetNewsQuery,
-  usePutNewsMutation,
-  useAddNewsMutation,
-  useDelNewsMutation,
-  useAddSubNewsImgMutation,
-  useDelSubNewsFileMutation,
-  usePutSubMenuImgMutation,
-  useGetCategoriesQuery,
   useAddCategoryMutation,
   useDelCategoryMutation,
+  useGetCategoriesQuery,
   usePutCategoriesMutation,
-  useGetCategoryAdvantagesQuery,
 } from "../../store/apis/appSelim";
 import Button from "../Button/Button";
+import CategoryAdvantages from "../CategoryAdvantages/CategoryAdvantages";
 import styles from "./Categories.module.scss";
 
 const Categories = () => {
-  const [updateNews] = usePutNewsMutation();
-  const [addNews, { isLoading }] = useAddNewsMutation();
   const { data: categories = [] } = useGetCategoriesQuery();
-  const { data: category_dvantages = [] } = useGetCategoryAdvantagesQuery();
-  const [deleteNews] = useDelNewsMutation();
-  const [addSunNewsImg] = useAddSubNewsImgMutation();
-  const [delSubNewsFile] = useDelSubNewsFileMutation();
-  const [updateSubImg] = usePutSubMenuImgMutation();
+  const [updateCategory] = usePutCategoriesMutation();
+  const [deleteCategory] = useDelCategoryMutation();
+  const [postCategory, isLoading] = useAddCategoryMutation();
 
   const [newImage, setNewImage] = useState(null);
-  const [newTxt, setNewTxt] = useState("");
   const [newTitle, setNewTitle] = useState("");
-  const [newSubFile, setNewSubFile] = useState("");
-  const [boolean, setBoolean] = useState(false);
+  const [newDesc, setNewDecs] = useState("");
 
-  const [update_txt, setUpdata_txt] = useState("");
-  const [update_file, setUpdate_file] = useState("");
+  const [update_file, setUpdate_file] = useState(null);
   const [update_title, setUpdate_title] = useState("");
   const [update_desc, setUpdate_desc] = useState("");
-  const [update_parent, setUpdate_parent] = useState("");
-  const [update_sub_file, setUpdate_sub_file] = useState("");
 
-  const handleDeleteNews = (e, id) => {
-    e.preventDefault();
-    deleteNews(id)
-      .unwrap()
-      .then((payload) => {
-        alert("ok");
-      })
-      .catch((err) => {
-        alert(err.status);
-      });
-  };
-
-  const handleUpdateNews = (e, id) => {
-    e.preventDefault();
-    const formdata = new FormData();
-    if (update_txt) {
-      formdata.append("text", update_txt);
-    }
-    if (update_title) {
-      formdata.append("title", update_title);
-    }
-    if (update_file) {
-      formdata.append("image", update_file);
-    }
-    const variable = { id, formdata };
-    updateNews(variable)
-      .unwrap()
-      .then((payload) => {
-        setUpdata_txt("");
-        setUpdate_file(null);
-        setUpdate_title("");
-        alert("ok");
-      })
-      .catch((err) => {
-        alert(err.status);
-      });
-  };
-
-  const upDateSubNewsImg = (e, id) => {
-    e.preventDefault();
-    const formdata = new FormData();
-    if (update_txt) {
-      formdata.append("text", update_txt);
-    }
-    if (update_title) {
-      formdata.append("title", update_title);
-    }
-    if (update_file) {
-      formdata.append("image", update_file);
-    }
-    const variable = { id, formdata };
-    updateSubImg(variable)
-      .unwrap()
-      .then((payload) => {
-        setUpdata_txt("");
-        setUpdate_file(null);
-        setUpdate_title("");
-      })
-      .catch((err) => {
-        alert(err.status);
-      });
-  };
 
   const handleChangeUpdateFile = (e) => {
     e.preventDefault();
     setUpdate_file(e.target.files[0]);
   };
 
-  const handleChangeUpdateSubFile = (e) => {
-    e.preventDefault();
-    setUpdate_sub_file(e.target.files[0]);
-  };
-
-  const handleChangeAddSubFile = (e) => {
-    e.preventDefault();
-    setNewSubFile(e.target.files[0]);
-  };
-
-  const addSubFile = (e, id) => {
-    e.preventDefault();
-    setBoolean(true);
-    const formdata = new FormData();
-    if (newSubFile) {
-      formdata.append("image", newSubFile);
-    }
-    formdata.append("news", id);
-    addSunNewsImg(formdata)
-      .unwrap()
-      .then((payload) => {
-        alert("ok");
-        setBoolean(false);
-      })
-      .catch((err) => {
-        alert(err.status);
-        setBoolean(false);
-      });
-  };
-
-  const deleteSubFile = (e, id) => {
-    e.preventDefault();
-    delSubNewsFile(id)
-      .unwrap()
-      .then((payload) => {
-        alert("ok");
-      })
-      .catch((err) => {
-        alert(err.status);
-      });
-  };
-
   const handleFileChange = (e) => {
     setNewImage(e.target.files[0]);
-    console.log(e.target.files[0].name);
   };
+
+  const handleUpdateCategories = (e, id) => {
+    e.preventDefault();
+    const formdata = new FormData();
+    if (update_desc) {
+      formdata.append("description", update_desc);
+    }
+    if (update_title) {
+      formdata.append("title", update_title);
+    }
+    if (update_file) {
+      formdata.append("image", update_file);
+    }
+    const variable = { id, formdata };
+    updateCategory(variable)
+      .unwrap()
+      .then((payload) => {
+        setUpdate_desc("");
+        setUpdate_file(null);
+        setUpdate_title("");
+        alert("ok");
+      })
+      .catch((err) => {
+        alert(err.status);
+      });
+  };
+
+
 
   const handleAddData = (e) => {
     e.preventDefault();
@@ -160,27 +67,37 @@ const Categories = () => {
     if (newImage) {
       formdata.append("image", newImage);
     }
-    if (newTxt) {
-      formdata.append("text", newTxt);
+    if (newDesc) {
+      formdata.append("description", newDesc);
     }
     if (newTitle) {
       formdata.append("title", newTitle);
     }
 
-    addNews(formdata)
+    postCategory(formdata)
       .unwrap()
       .then((payload) => {
-        console.log("ok");
+        alert("ok");
         setNewImage(null);
-        setNewTxt("");
+        setNewDecs("");
       })
       .catch((err) => {
         alert(err.status);
       });
   };
 
-  console.log(categories);
-  console.log(update_sub_file);
+  const handleDeleteNews = (e, id) => {
+    e.preventDefault();
+    deleteCategory(id)
+      .unwrap()
+      .then((payload) => {
+        alert("ok");
+      })
+      .catch((err) => {
+        alert(err.status);
+      });
+  };
+
 
   return (
     <>
@@ -227,60 +144,18 @@ const Categories = () => {
               <label htmlFor={`category_desc_${item.id}`}>Описание</label>
               <textarea
                 className={styles.form__textarea}
+                defaultValue={item.description}
                 type="text"
                 id={`category_desc_${item.id}`}
                 name="description"
                 onChange={(e) => setUpdate_desc(e.target.value)}
-              >
-                {item.description}
-              </textarea>
+              />
             </p>
-            <p className={styles.form__field}>
-              <label htmlFor={`parent_category_${item.id}`}>Категория</label>
-              <textarea
-                className={styles.form__textarea}
-                type="text"
-                id={`parent_category_${item.id}`}
-                name="parent_category"
-                onChange={(e) => setUpdate_parent(e.target.value)}
-              >
-                {item.parent_category}
-              </textarea>
-            </p>
-
             <div className={styles.sub_img}>
-              {category_dvantages.map((image) => (
-                <div className={styles.div_for_subnews} key={image.id}>
-                  <label
-                    htmlFor={`description${image.id}`}
-                    className={styles.form__label}
-                  >
-                   description
-                  </label>
-                  <input
-                    type="text"
-                    id={`description${image.id}`}
-                    defaultValue={image.text}
-                    onChange={handleChangeUpdateSubFile}
-                  />
-                  <label
-                    htmlFor={`sub_title_${image.id}`}
-                    className={styles.form__label}
-                  >
-                   description
-                  </label>
-                  <textarea
-                    type="text"
-                    id={`sub_title_${image.id}`}
-                    defaultValue={image.text}
-                    onChange={handleChangeUpdateSubFile}
-                  />
-                  <Button onClick={(e) => deleteSubFile(e, image.id)}>
-                    Удалить
-                  </Button>
-                </div>
-              ))}
-              <div className={styles.sub_file_add}>
+              <div>
+                <CategoryAdvantages id={item.id} />
+              </div>
+              {/* <div className={styles.sub_file_add}>
                 <label className={styles.form__label_add}>
                   {newSubFile ? (
                     <span>{newSubFile.name}</span>
@@ -296,10 +171,9 @@ const Categories = () => {
                     <span>Выложить</span>
                   )}
                 </Button>
-              </div>
+              </div> */}
             </div>
-
-            <Button onClick={(e) => handleUpdateNews(e, item.id)}>
+            <Button onClick={(e) => handleUpdateCategories(e, item.id)}>
               Обновить
             </Button>
             <Button onClick={(e) => handleDeleteNews(e, item.id)}>
@@ -313,7 +187,7 @@ const Categories = () => {
       <section className={styles.section}>
         <h1 className={styles.title}>Добавить новость</h1>
 
-        <form className={styles.form} onSubmit={(e) => handleAddData(e)}>
+        <form className={styles.form}>
           <p className={styles.form__field}>
             <label htmlFor="main_info__title" className={styles.form__label}>
               {newImage ? (
@@ -327,7 +201,6 @@ const Categories = () => {
               type="file"
               id="main_info__title"
               name="title"
-              // value={newImage}
               onChange={handleFileChange}
             />
           </p>
@@ -349,8 +222,8 @@ const Categories = () => {
               type="text"
               id="main_info__subtitle"
               name="subtitle"
-              onChange={(e) => setNewTxt(e.target.value)}
-              value={newTxt}
+              onChange={(e) => setNewDecs(e.target.value)}
+              value={newDesc}
             />
           </p>
 
