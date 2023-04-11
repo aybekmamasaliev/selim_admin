@@ -178,6 +178,42 @@ function MainInfo() {
 
       <section className={styles.section}>
         <form className={styles.form}>
+          <h2>Карта</h2>
+          {phoneNumbersData?.map(({ id, number }) => (
+            <p key={id} className={styles.form__field}>
+              <label className={styles.form__label} htmlFor={`phone-${id}`}>
+                Номер {id}
+              </label>
+              <input
+                type="text"
+                id={`phone-${id}`}
+                className={styles.form__input}
+                value={
+                  phoneNumbersData?.filter(
+                    (phoneNumber) => phoneNumber.id === id
+                  )[0].number
+                }
+                onChange={(e) => {
+                  const nextPhoneNumbersdata = phoneNumbersData.map(
+                    (phoneNumber) => {
+                      if (phoneNumber.id === id) {
+                        return { ...phoneNumber, number: e.target.value };
+                      }
+                      return phoneNumber;
+                    }
+                  );
+                  setPhoneNumbersData(nextPhoneNumbersdata);
+                }}
+              />
+            </p>
+          ))}
+
+          <Button>Сохранить</Button>
+        </form>
+      </section>
+
+      <section className={styles.section}>
+        <form className={styles.form}>
           <h2>Социальные сети</h2>
           <p className={styles.form__field}>
             <label className={styles.form__label} htmlFor="instagram">

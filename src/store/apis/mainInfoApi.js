@@ -25,12 +25,68 @@ const mainInfoApi = createApi({
           };
         },
       }),
+      putMainInfo: build.mutation({
+        query: ({id, formdata}) => {
+          return {
+            url: `main_info/main_info/${id}/`,
+            method: 'PATCH',
+            body: formdata,
+          };
+        },
+      }),
+      putAboutUs: build.mutation({
+        query: ({id, formdata}) => {
+          return {
+            url: `/main_info/about_us/${id}/`,
+            method: 'PATCH',
+            body: formdata,
+          };
+        },
+      }),
+
+      putSocialMedia: build.mutation({
+        query: ({id, formdata}) => {
+          return {
+            url: `main_info/social_media/${id}`,
+            method: 'PATCH',
+            body: formdata,
+          };
+        },
+      }),
+
+      putPhoneNumber: build.mutation({
+        query: ({id, formdata}) => {
+          return {
+            url: `/main_info/phone_number/${id}/`,
+            method: 'PATCH',
+            body: formdata,
+          };
+        },
+      }),
 
       fetchAboutUs: build.query({
         query: () => {
           return {
             url: 'main_info/about_us/',
             method: 'GET',
+          };
+        },
+      }),
+      fetchMap: build.query({
+        query: () => {
+          return {
+            url: '/main_info/map/',
+            method: 'GET',
+          };
+        },
+      }),
+
+      putMap: build.mutation({
+        query: ({id, formdata}) => {
+          return {
+            url: `/main_info/phone_number/${id}/`,
+            method: 'PATCH',
+            body: formdata,
           };
         },
       }),
@@ -61,6 +117,7 @@ const mainInfoApi = createApi({
           };
         },
       }),
+
     };
   },
 });
@@ -71,7 +128,13 @@ export const {
   useFetchMainInfoQuery,
   useUpdateMainInfoMutation,
   useFetchAboutUsQuery,
+  useFetchMapQuery,
   useUpdateAboutUsMutation,
   useFetchPhoneNumberQuery,
   useFetchSocialMediaQuery,
+  usePutMainInfoMutation,
+  usePutAboutUsMutation,
+  usePutSocialMediaMutation,
+  usePutPhoneNumberMutation,
+  usePutMapMutation,
 } = mainInfoApi;
