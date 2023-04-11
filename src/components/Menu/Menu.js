@@ -6,8 +6,11 @@ function Menu() {
     <section className="menu">
       <nav role="navigation">
         <ul>
-          <li>
+          {/* <li>
             <NavLink to="/main_info">Главная страница</NavLink>
+          </li> */}
+          <li>
+            <NavLink to="/main_info">Главная страница </NavLink>
           </li>
           <li>
             <NavLink to="/advantages">Преимущества</NavLink>

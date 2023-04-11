@@ -69,6 +69,9 @@ const appSelimApi = createApi({
             ]
           : [{ type: "CategoryAdvantages", id: "LIST" }],
     }),
+    getMap: build.query({
+      query: () => "/main_info/map/",
+    }),
 
     putAdvantages: build.mutation({
       query: ({ id, formdata }) => ({
@@ -234,6 +237,14 @@ const appSelimApi = createApi({
       invalidatesTags: [{ type: "Categories", id: "LIST" }],
     }),
     addCategoryAdvantages: build.mutation({
+      query: (body) => ({
+        url: `category-advantages/`,
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: [{ type: "CategoryAdvantages", id: "LIST" }],
+    }),
+    addMapLocation: build.mutation({
       query: (body) => ({
         url: `category-advantages/`,
         method: "POST",

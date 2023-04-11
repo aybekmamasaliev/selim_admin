@@ -257,7 +257,6 @@ const News = () => {
                 name="title"
                 defaultValue={item.title}
                 placeholder={item.title}
-                // value={update_txt}
                 onChange={(e) => setUpdate_title(e.target.value)}
               />
             </p>

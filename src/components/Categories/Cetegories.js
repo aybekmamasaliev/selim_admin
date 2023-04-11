@@ -13,11 +13,12 @@ const Categories = () => {
   const { data: categories = [] } = useGetCategoriesQuery();
   const [updateCategory] = usePutCategoriesMutation();
   const [deleteCategory] = useDelCategoryMutation();
-  const [postCategory, isLoading] = useAddCategoryMutation();
+  const [postCategory] = useAddCategoryMutation();
 
   const [newImage, setNewImage] = useState(null);
   const [newTitle, setNewTitle] = useState("");
   const [newDesc, setNewDecs] = useState("");
+  const [isLoading, setIsloading]=useState(false);
 
   const [update_file, setUpdate_file] = useState(null);
   const [update_title, setUpdate_title] = useState("");
@@ -63,6 +64,7 @@ const Categories = () => {
 
   const handleAddData = (e) => {
     e.preventDefault();
+    setIsloading(true);
     const formdata = new FormData();
     if (newImage) {
       formdata.append("image", newImage);
@@ -78,11 +80,17 @@ const Categories = () => {
       .unwrap()
       .then((payload) => {
         alert("ok");
-        setNewImage(null);
+        setNewTitle("")
         setNewDecs("");
+        setIsloading(false)
+        setNewImage(null)
       })
       .catch((err) => {
         alert(err.status);
+        setIsloading(false);
+        setNewTitle("")
+        setNewDecs("");
+        setNewImage(null)
       });
   };
 
@@ -92,9 +100,13 @@ const Categories = () => {
       .unwrap()
       .then((payload) => {
         alert("ok");
+        setNewDecs("");
+        setNewTitle("")
       })
       .catch((err) => {
         alert(err.status);
+        setNewDecs("");
+        setNewTitle("")
       });
   };
 
@@ -185,7 +197,7 @@ const Categories = () => {
       </section>
 
       <section className={styles.section}>
-        <h1 className={styles.title}>Добавить новость</h1>
+        <h1 className={styles.title}>Добавить категорию</h1>
 
         <form className={styles.form}>
           <p className={styles.form__field}>
@@ -229,10 +241,10 @@ const Categories = () => {
 
           <Button
             type="submit"
-            onSubmit={(e) => handleAddData(e)}
-            disabled={!newImage || isLoading}
-          >
-            {isLoading ? "Выкладывается..." : "Выложить"}
+            onClick={(e) => handleAddData(e)}
+          >{
+            isLoading? <span>Выкладывается ...</span>:<span>Выложить</span>
+          }
           </Button>
         </form>
       </section>

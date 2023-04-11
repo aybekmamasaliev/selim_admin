@@ -13,6 +13,7 @@ import News from './components/News/News';
 import Reviews from './components/Reviews/Reviews';
 import Feedback from './components/FeedBack/FeedBack';
 import Categories from './components/Categories/Cetegories';
+import MainInfoTwo from './components/MainInfo2/MainInfoTwo';
 
 function App() {
   return (
@@ -21,14 +22,15 @@ function App() {
         <Menu />
         <main className="main">
           <Routes>
-            <Route path="/" element={<MainInfo />} />
+            <Route path="/" element={<MainInfoTwo />} />
             <Route path="/advantages" element={<Advantages/>} />
             <Route path="/services" element={<Services/>} />
             <Route path="/news" element={<News/>} />
             <Route path="/reviews" element={<Reviews/>} />
             <Route path="/feedback" element={<Feedback/>} />
             <Route path="/categories" element={<Categories/>} />
-            <Route path="/main_info" element={<MainInfo />} />
+            {/* <Route path="/main_info" element={<MainInfo />} /> */}
+            <Route path="/main_info" element={<MainInfoTwo />} />
             <Route path="/login" element={<LogIn />} />
           </Routes>
         </main>
