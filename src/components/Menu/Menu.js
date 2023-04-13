@@ -31,7 +31,7 @@ function Menu() {
             <NavLink to="/feedback">Вопросы</NavLink>
           </li>
           <li>
-            <NavLink>Галерея</NavLink>
+            <NavLink to="/products">Галерея</NavLink>
           </li>
           <li>
             <NavLink to="/login">Логин</NavLink>

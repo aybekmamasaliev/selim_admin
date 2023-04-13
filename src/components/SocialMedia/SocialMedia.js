@@ -12,6 +12,8 @@ import Button from "../Button/Button";
 const SocialMedia = () => {
   const [updateInsta, setUpdateInsta] = useState("");
 
+  const [updateTelegram, setUpdateTelegram] = useState("");
+
   const [updateWhatsapp, setUpdateWhatsapp] = useState("");
 
   const { data: socialMedia = [], isLoading } = useFetchSocialMediaQuery();
@@ -26,6 +28,10 @@ const SocialMedia = () => {
     }
     if (updateWhatsapp) {
       formdata.append("whatsapp", updateWhatsapp);
+    }
+
+    if(updateTelegram){
+      formdata.append("telegram", updateTelegram)
     }
 
     const variable = { id, formdata };
@@ -80,6 +86,17 @@ const SocialMedia = () => {
                 id={`social_${filteredSocial.whatsapp}`}
                 defaultValue={filteredSocial.whatsapp}
                 onChange={(e) => setUpdateWhatsapp(e.target.value)}
+              />
+            </p>
+            <p className={styles.form__field}>
+              <label className={styles.form__label} htmlFor={`social_${filteredSocial.telegram}`}>
+                Телеграм
+              </label>
+              <textarea
+                className={styles.form__textarea}
+                id={`social_${filteredSocial.telegram}`}
+                defaultValue={filteredSocial.telegram}
+                onChange={(e) => setUpdateTelegram(e.target.value)}
               />
             </p>
             <Button

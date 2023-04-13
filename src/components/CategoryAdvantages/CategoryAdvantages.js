@@ -95,9 +95,9 @@ const CategoryAdvantages = (props) => {
     <>
       <div className={styles.cover_form}>
         {filteredAdvantages.map((item) => (
-          <form className={styles.form}>
+          <form className={styles.form} key={item.id}>
             <div className={styles.flex_c}>
-              <label htmlFor={`title_${item.id}`}>Заголовок</label>
+              <label htmlFor={`title_${item.id}`}>Заголовок преимущества</label>
               <input
                 id={`title_${item.id}`}
                 className={styles.input}
@@ -106,14 +106,13 @@ const CategoryAdvantages = (props) => {
               />
             </div>
             <div className={styles.flex_c}>
-              <label htmlFor={`text_area_${item.id}`}>Описание</label>
+              <label htmlFor={`text_area_${item.id}`}>Описание преимущества</label>
               <textarea
                 className={styles.texarea}
                 id={`text_area_${item.id}`}
+                defaultValue={item.text}
                 onChange={handleText}
-              >
-                {item.text}
-              </textarea>
+              />
             </div>
             <Button onClick={(e) => updateData(e, item.id)}>Обновить</Button>
             <br />
@@ -126,7 +125,7 @@ const CategoryAdvantages = (props) => {
       <div className={styles.cover_form}>
         <form className={styles.form}>
           <div className={styles.flex_c}>
-            <label htmlFor={`title}`}>Заголовок</label>
+            <label htmlFor={`title}`}>Заголовок преимущества</label>
             <input
               id={`title`}
               value={new_title}
@@ -135,7 +134,7 @@ const CategoryAdvantages = (props) => {
             />
           </div>
           <div className={styles.flex_c}>
-            <label htmlFor={`text`}>Описание</label>
+            <label htmlFor={`text`}>Описание преимущества</label>
             <textarea
               className={styles.texarea}
               value={new_text}

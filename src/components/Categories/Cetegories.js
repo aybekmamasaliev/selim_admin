@@ -8,6 +8,7 @@ import {
 import Button from "../Button/Button";
 import CategoryAdvantages from "../CategoryAdvantages/CategoryAdvantages";
 import styles from "./Categories.module.scss";
+import SubCategories from "../SubCategories/SubCategories";
 
 const Categories = () => {
   const { data: categories = [] } = useGetCategoriesQuery();
@@ -15,7 +16,7 @@ const Categories = () => {
   const [deleteCategory] = useDelCategoryMutation();
   const [postCategory] = useAddCategoryMutation();
 
-  const [newImage, setNewImage] = useState(null);
+  const [newImageMain, setNewImageMain] = useState(null);
   const [newTitle, setNewTitle] = useState("");
   const [newDesc, setNewDecs] = useState("");
   const [isLoading, setIsloading]=useState(false);
@@ -30,8 +31,8 @@ const Categories = () => {
     setUpdate_file(e.target.files[0]);
   };
 
-  const handleFileChange = (e) => {
-    setNewImage(e.target.files[0]);
+  const handleFileChangee = (e) => {
+    setNewImageMain(e.target.files[0]);
   };
 
   const handleUpdateCategories = (e, id) => {
@@ -66,8 +67,8 @@ const Categories = () => {
     e.preventDefault();
     setIsloading(true);
     const formdata = new FormData();
-    if (newImage) {
-      formdata.append("image", newImage);
+    if (newImageMain) {
+      formdata.append("image", newImageMain);
     }
     if (newDesc) {
       formdata.append("description", newDesc);
@@ -83,14 +84,14 @@ const Categories = () => {
         setNewTitle("")
         setNewDecs("");
         setIsloading(false)
-        setNewImage(null)
+        setNewImageMain(null)
       })
       .catch((err) => {
         alert(err.status);
         setIsloading(false);
         setNewTitle("")
         setNewDecs("");
-        setNewImage(null)
+        setNewImageMain(null)
       });
   };
 
@@ -165,25 +166,11 @@ const Categories = () => {
             </p>
             <div className={styles.sub_img}>
               <div>
+                <SubCategories id={item.id}/>
+              </div>
+              <div>
                 <CategoryAdvantages id={item.id} />
               </div>
-              {/* <div className={styles.sub_file_add}>
-                <label className={styles.form__label_add}>
-                  {newSubFile ? (
-                    <span>{newSubFile.name}</span>
-                  ) : (
-                    <span>Добавить файл</span>
-                  )}
-                  <input type="file" onChange={handleChangeAddSubFile} />
-                </label>
-                <Button onClick={(e) => addSubFile(e, item.id)}>
-                  {boolean ? (
-                    <span>Выкладывается ...</span>
-                  ) : (
-                    <span>Выложить</span>
-                  )}
-                </Button>
-              </div> */}
             </div>
             <Button onClick={(e) => handleUpdateCategories(e, item.id)}>
               Обновить
@@ -195,15 +182,16 @@ const Categories = () => {
           </form>
         ))}
       </section>
+      {/* <ForAddCategory/> */}
 
-      <section className={styles.section}>
+       <section className={styles.section}>
         <h1 className={styles.title}>Добавить категорию</h1>
 
         <form className={styles.form}>
           <p className={styles.form__field}>
-            <label htmlFor="main_info__title" className={styles.form__label}>
-              {newImage ? (
-                <span>Вы выбрали файл : {newImage.name}</span>
+            <label htmlFor="file_of_main_category" className={styles.form__label}>
+              {newImageMain ? (
+                <span>Вы выбрали файл : {newImageMain.name}</span>
               ) : (
                 <span>Файл</span>
               )}
@@ -211,9 +199,9 @@ const Categories = () => {
             <input
               className={styles.form__file}
               type="file"
-              id="main_info__title"
+              id="file_of_main_category"
               name="title"
-              onChange={handleFileChange}
+              onChange={handleFileChangee}
             />
           </p>
           <p className={styles.form__field}>
@@ -239,12 +227,8 @@ const Categories = () => {
             />
           </p>
 
-          <Button
-            type="submit"
-            onClick={(e) => handleAddData(e)}
-          >{
-            isLoading? <span>Выкладывается ...</span>:<span>Выложить</span>
-          }
+          <Button type="submit" onClick={(e) => handleAddData(e)}>
+            {isLoading ? <span>Выкладывается ...</span> : <span>Выложить</span>}
           </Button>
         </form>
       </section>

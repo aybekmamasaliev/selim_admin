@@ -14,6 +14,7 @@ import Reviews from './components/Reviews/Reviews';
 import Feedback from './components/FeedBack/FeedBack';
 import Categories from './components/Categories/Cetegories';
 import MainInfoTwo from './components/MainInfo2/MainInfoTwo';
+import Products from './components/Products/Products';
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
             <Route path="/categories" element={<Categories/>} />
             {/* <Route path="/main_info" element={<MainInfo />} /> */}
             <Route path="/main_info" element={<MainInfoTwo />} />
+            <Route path="/products" element={<Products />} />
             <Route path="/login" element={<LogIn />} />
           </Routes>
         </main>

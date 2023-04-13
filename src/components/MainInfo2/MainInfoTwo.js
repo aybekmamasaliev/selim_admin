@@ -1,13 +1,8 @@
 import { useEffect, useState } from "react";
 import {
-  useFetchAboutUsQuery,
   useFetchMainInfoQuery,
-  useFetchPhoneNumberQuery,
-  useFetchSocialMediaQuery,
   usePutAboutUsMutation,
   usePutMainInfoMutation,
-  useUpdateAboutUsMutation,
-  useUpdateMainInfoMutation,
 } from "../../store/apis/mainInfoApi";
 import AboutUs from "../AboutUs/AboutUs";
 import Button from "../Button/Button";
@@ -17,21 +12,11 @@ import SocialMedia from "../SocialMedia/SocialMedia";
 import styles from "./MainInfo.module.scss";
 
 function MainInfoTwo() {
-  const [mainInfoData, setMainInfoData] = useState({ title: "", subtitle: "" });
-  const [aboutUsData, setAboutUsData] = useState({ title: "", text: "" });
-  const [phoneNumbersData, setPhoneNumbersData] = useState([]);
-  const [socialMediaData, setSocialMediaData] = useState({
-    instagram: "",
-    whatsapp: "",
-  });
 
   const [updateMainInfoTitle, setUpdateMainInfoTitle] = useState("");
   const [updateMainInfoText, setUpdateMainInfoText] = useState("");
-  const [updateAboutUsTitle, setUpdateAboutUsTitle] = useState("");
-  const [updateAboutUsText, setUpdateAboutUsText] = useState("");
 
   const [putMainInfo] = usePutMainInfoMutation();
-  const [putAboutUs] = usePutAboutUsMutation();
 
   const { data: mainInfo, isLoading } = useFetchMainInfoQuery();
 
