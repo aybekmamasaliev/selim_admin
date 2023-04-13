@@ -34,6 +34,9 @@ function Menu() {
             <NavLink to="/products">Галерея</NavLink>
           </li>
           <li>
+            <NavLink to="/admin_users">Администраторы</NavLink>
+          </li>
+          <li>
             <NavLink to="/login">Логин</NavLink>
           </li>
         </ul>

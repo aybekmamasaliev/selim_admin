@@ -1,6 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const authSlice = createSlice({
+
+
   name: 'auth',
   initialState: {
     accessToken: '',
@@ -8,6 +10,7 @@ const authSlice = createSlice({
     isLoggedIn: false,
   },
   reducers: {
+
     setCredentials: (state, { payload }) => {
       state.accessToken = payload.access;
       state.refreshToken = payload.refresh;
