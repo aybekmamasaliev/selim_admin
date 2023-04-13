@@ -1,4 +1,5 @@
 
+import { useState } from "react";
 import {
   useDelFeedBackMutation,
   useGetFeedBackQuery,
@@ -7,8 +8,16 @@ import Button from "../Button/Button";
 import styles from "./Feedback.module.scss";
 
 const Feedback = () => {
+  const [limit, setLimit]=useState(20)
+  const [offset, setOffset]=useState(0)
 
-  const { data: feedback = [], isLoading } = useGetFeedBackQuery();
+  const handleREload=()=>{
+    setLimit(limit+20)
+    setOffset(offset+20)
+
+  }
+
+  const { data: feedback = [], isLoading } = useGetFeedBackQuery({limit ,offset });
   const [deleteFeedback] = useDelFeedBackMutation();
 
   const handleDeleteAdvantages = (e, id) => {
@@ -33,7 +42,7 @@ const Feedback = () => {
           <p className={styles.loading}>loading ...</p>
         ) : (
           <div>
-            {feedback.map((item) => (
+            {feedback.results?.map((item) => (
               <form className={styles.form} key={item.id}>
                 <p className={styles.form__field}>
                   <label htmlFor={`feedback_${item.id}`}>Имя</label>
@@ -79,6 +88,7 @@ const Feedback = () => {
                     placeholder={item.number}
                   />
                 </p>
+                <p>{item.id}</p>
                 <Button onClick={(e) => handleDeleteAdvantages(e, item.id)}>
                   Удалить
                 </Button>
@@ -87,6 +97,11 @@ const Feedback = () => {
             ))}
           </div>
         )}
+        <Button onClick={handleREload}>
+          {isLoading?
+          <span>Идет загрузка</span>:<span>Загрузить еще</span>
+        }
+          </Button>
       </section>
     </>
   );

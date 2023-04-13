@@ -37,18 +37,20 @@ const appSelimApi = createApi({
     }),
     getNews: build.query({
       query: (count, reload) => `news?limit=${count}&offset=${reload}`,
-      
     }),
     getFeedBack: build.query({
-      query: () => "feedback",
-      providesTags: (result) =>
-        result
-          ? [
-              ...result.map(({ id }) => ({ type: "FeedBack", id })),
-              { type: "FeedBack", id: "LIST" },
-            ]
-          : [{ type: "FeedBack", id: "LIST" }],
+      query: ({limit,reload}) => `feedback?limit=${limit}&offset=${reload}`,
     }),
+    // getFeedBack: build.query({
+    //   query: () => "feedback?limit=${count}&offset=${reload}",
+    //   providesTags: (result) =>
+    //     result
+    //       ? [
+    //           ...result.map(({ id }) => ({ type: "FeedBack", id })),
+    //           { type: "FeedBack", id: "LIST" },
+    //         ]
+    //       : [{ type: "FeedBack", id: "LIST" }],
+    // }),
     getCategories: build.query({
       query: () => "categories",
       providesTags: (result) =>
@@ -69,6 +71,21 @@ const appSelimApi = createApi({
             ]
           : [{ type: "CategoryAdvantages", id: "LIST" }],
     }),
+
+    getProducts: build.query({
+      query: () => "products",
+      providesTags: (result) =>
+        result
+          ? [
+              ...result.map(({ id }) => ({ type: "Products", id })),
+              { type: "Products", id: "LIST" },
+            ]
+          : [{ type: "Products", id: "LIST" }],
+    }),
+    getCategoryDetails: build.query({
+      query: (id) => `categories/${id}/`,
+    }),
+
     getMap: build.query({
       query: () => "/main_info/map/",
     }),
@@ -129,6 +146,17 @@ const appSelimApi = createApi({
       }),
       invalidatesTags: [{ type: "CategoryAdvantages", id: "LIST" }],
     }),
+
+    putMap: build.mutation({
+      query: ({formdata ,id}) => ({
+        url: `main_info/map/${id}/`,
+        method: "PATCH",
+        body: formdata,
+      }),
+      invalidatesTags: [{ type: "Map", id: "LIST" }],
+    }),
+
+
     delAdvantages: build.mutation({
       query: (id) => ({
         url: `advantages/${id}/`,
@@ -188,6 +216,14 @@ const appSelimApi = createApi({
       invalidatesTags: [{ type: "CategoryAdvantages", id: "LIST" }],
     }),
 
+    delProducts: build.mutation({
+      query: (id) => ({
+        url: `products/${id}/`,
+        method: "DELETE",
+      }),
+      invalidatesTags: [{ type: "Products", id: "LIST" }],
+    }),
+
     addAdvantages: build.mutation({
       query: (body) => ({
         url: "advantages/",
@@ -244,13 +280,23 @@ const appSelimApi = createApi({
       }),
       invalidatesTags: [{ type: "CategoryAdvantages", id: "LIST" }],
     }),
+
     addMapLocation: build.mutation({
       query: (body) => ({
-        url: `category-advantages/`,
+        url: `main_info/map/`,
         method: "POST",
         body,
       }),
-      invalidatesTags: [{ type: "CategoryAdvantages", id: "LIST" }],
+      invalidatesTags: [{ type: "Map", id: "LIST" }],
+    }),
+
+    addProducts: build.mutation({
+      query: (body) => ({
+        url: `products`,
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: [{ type: "Products", id: "LIST" }],
     }),
   }),
 });
@@ -287,5 +333,8 @@ export const {
   useAddCategoryAdvantagesMutation,
   useDelCategoryAdvantagesMutation,
   usePutCategoryAdvantagesMutation,
-
+  useGetProductsQuery,
+  useDelProductsMutation,
+  useAddProductsMutation,
+  useGetCategoryDetailsQuery,
 } = appSelimApi;

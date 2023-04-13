@@ -139,7 +139,6 @@ const Advantages = () => {
 
       <section className={styles.section}>
         <h1 className={styles.title}>Добавить преимущества</h1>
-
         <form className={styles.form} onSubmit={(e) => handleAddData(e)}>
           <p className={styles.form__field}>
             <label htmlFor="main_info__title" className={styles.form__label}>

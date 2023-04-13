@@ -84,7 +84,7 @@ const mainInfoApi = createApi({
       putMap: build.mutation({
         query: ({id, formdata}) => {
           return {
-            url: `/main_info/phone_number/${id}/`,
+            url: `/main_info/map/${id}/`,
             method: 'PATCH',
             body: formdata,
           };
