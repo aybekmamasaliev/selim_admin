@@ -82,6 +82,16 @@ const appSelimApi = createApi({
             ]
           : [{ type: "Products", id: "LIST" }],
     }),
+    getAdminusers: build.query({
+      query: () => "accounts/users_list/",
+      providesTags: (result) =>
+        result
+          ? [
+              ...result.map(({ id }) => ({ type: "Adminusers", id })),
+              { type: "Adminusers", id: "LIST" },
+            ]
+          : [{ type: "Adminusers", id: "LIST" }],
+    }),
     getCategoryDetails: build.query({
       query: (id) => `categories/${id}/`,
     }),
@@ -156,6 +166,14 @@ const appSelimApi = createApi({
       invalidatesTags: [{ type: "Map", id: "LIST" }],
     }),
 
+    putAdminUser: build.mutation({
+      query: ({formdata ,id}) => ({
+        url: `accounts/profile/${id}/`,
+        method: "PATCH",
+        body: formdata,
+      }),
+      invalidatesTags: [{ type: "Adminusers", id: "LIST" }],
+    }),
 
     delAdvantages: build.mutation({
       query: (id) => ({
@@ -222,6 +240,14 @@ const appSelimApi = createApi({
         method: "DELETE",
       }),
       invalidatesTags: [{ type: "Products", id: "LIST" }],
+    }),
+
+    delAdminusers: build.mutation({
+      query: (id) => ({
+        url: `accounts/profile/${id}/`,
+        method: "DELETE",
+      }),
+      invalidatesTags: [{ type: "Adminusers", id: "LIST" }],
     }),
 
     addAdvantages: build.mutation({
@@ -298,6 +324,15 @@ const appSelimApi = createApi({
       }),
       invalidatesTags: [{ type: "Products", id: "LIST" }],
     }),
+
+    addNewAdmin: build.mutation({
+      query: (body) => ({
+        url: `accounts/register/`,
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: [{ type: "Adminusers", id: "LIST" }],
+    }),
   }),
 });
 
@@ -337,4 +372,8 @@ export const {
   useDelProductsMutation,
   useAddProductsMutation,
   useGetCategoryDetailsQuery,
+  useGetAdminusersQuery,
+  useDelAdminusersMutation,
+  useAddNewAdminMutation,
+  usePutAdminUserMutation,
 } = appSelimApi;

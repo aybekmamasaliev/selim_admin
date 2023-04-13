@@ -76,7 +76,7 @@ const Advantages = () => {
     addAdvantages(formdata)
       .unwrap()
       .then((payload) => {
-        console.log("ok");
+        alert("ok");
         setNewImage(null)
         setNewTxt("")
       })
