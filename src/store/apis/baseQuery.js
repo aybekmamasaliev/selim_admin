@@ -1,18 +1,17 @@
-import { fetchBaseQuery } from '@reduxjs/toolkit/dist/query';
-import { updateAccessToken } from '../slices/authSlice';
+import { fetchBaseQuery } from "@reduxjs/toolkit/dist/query";
+import { updateAccessToken } from "../slices/authSlice";
+import { TOKEN_KEY } from "../../utils/constants/general";
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: 'http://161.35.29.179:8001/',
+  baseUrl: "http://161.35.29.179:8001/",
   prepareHeaders: (headers, { getState }) => {
     const token = getState().auth.accessToken;
     if (token) {
-      headers.set('authorization', `Bearer ${token}`);
+      headers.set("authorization", `Bearer ${token}`);
     }
     return headers;
   },
-
 });
-
 
 const baseQueryWithTokenRefresh = async (args, api, extraOptions) => {
   let result = await baseQuery(args, api, extraOptions);
@@ -22,8 +21,8 @@ const baseQueryWithTokenRefresh = async (args, api, extraOptions) => {
 
     const refreshResult = await baseQuery(
       {
-        url: 'accounts/api/token/refresh/',
-        method: 'POST',
+        url: "accounts/api/token/refresh/",
+        method: "POST",
         body: { refresh: api.getState().auth.refreshToken },
       },
       api,
@@ -36,6 +35,10 @@ const baseQueryWithTokenRefresh = async (args, api, extraOptions) => {
 
       // retry original query with new access token
       result = await baseQuery(args, api, extraOptions);
+    }
+    // USHUL JERDI NORMALNYI KYLYP JASASANYZ BOLOT TOKENDER EXPIRED BOLGONDO
+    if (result.error.status === 401) {
+      localStorage.removeItem(TOKEN_KEY);
     }
   }
   return result;
