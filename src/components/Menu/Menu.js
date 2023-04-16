@@ -40,7 +40,7 @@ function Menu({ isLoggedIn }) {
                 <NavLink to="/dashboard/news">Новости</NavLink>
               </li>
               <li>
-                <NavLink to="/dashboardcategories">Категории</NavLink>
+                <NavLink to="/dashboard/categories">Категории</NavLink>
               </li>
               <li>
                 <NavLink to="/dashboard/reviews">Отзывы</NavLink>
