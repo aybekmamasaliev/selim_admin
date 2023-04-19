@@ -67,3 +67,9 @@ h6 {
 #root {
   isolation: isolate;
 }
+
+li,
+a {
+  list-style: none;
+  text-decoration: none;
+}

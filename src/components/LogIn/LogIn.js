@@ -1,14 +1,15 @@
-import Button from '../Button/Button';
-import styles from './LogIn.module.scss';
-import { useEffect, useState } from 'react';
-import { useFetchTokenMutation } from '../../store/apis/accountsApi';
-import { setCredentials } from '../../store/slices/authSlice';
-import { useDispatch } from 'react-redux';
+import Button from "../Button/Button";
+import styles from "./LogIn.module.scss";
+import { useEffect, useState } from "react";
+import { useFetchTokenMutation } from "../../store/apis/accountsApi";
+import { setCredentials } from "../../store/slices/authSlice";
+import { useDispatch } from "react-redux";
+import { TOKEN_KEY } from "../../utils/constants/general";
+import { addItemToStorage } from "../../utils/helpers/localStorageHelpers";
 
 function LogIn() {
-  const [userData, setUserData] = useState({ username: '', password: '' });
+  const [userData, setUserData] = useState({ username: "", password: "" });
   const [fetchToken, { data: tokens }] = useFetchTokenMutation();
-
   const dispatch = useDispatch();
 
   const handleChange = (e) => {
@@ -26,7 +27,8 @@ function LogIn() {
     if (!tokens) return;
 
     dispatch(setCredentials(tokens));
-    sessionStorage.setItem('tokenRefresh', tokens.refresh);
+    addItemToStorage(TOKEN_KEY, tokens.access);
+    sessionStorage.setItem("tokenRefresh", tokens.refresh);
   }, [tokens, dispatch]);
 
   return (
